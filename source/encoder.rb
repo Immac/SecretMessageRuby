@@ -7,7 +7,7 @@ class Encoder
     output_path = get_output_path(path)
     binary_message = to_binary_string(message)
     bitmap_file = File.binread path
-    bitmap_file = bitmap_file.unpack('C*');print bitmap_file; puts ''
+    bitmap_file = bitmap_file.unpack('C*');
     output_file = encode_into_byte_array(bitmap_file,binary_message)
     write_to_file(output_file,output_path)
   end
@@ -22,8 +22,9 @@ class Encoder
   def self.encode_into_byte_array(input_byte_array, binary_message)
     raise 'Not enough space in file' if (not_enough_space(binary_message,input_byte_array))
     output = input_byte_array
-    for index in START_OFFSET...binary_message.length
-      output[index] = (input_byte_array[index] & ~1) | binary_message[index].to_i
+    for index in 0...(binary_message.length)
+      print binary_message[index]
+      output[index + START_OFFSET] = (input_byte_array[index] & ~1) | binary_message[index].to_i
     end
     output
   end
