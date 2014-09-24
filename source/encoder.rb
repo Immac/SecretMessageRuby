@@ -24,7 +24,7 @@ class Encoder
     output = input_byte_array
     for index in 0...(binary_message.length)
       print binary_message[index]
-      output[index + START_OFFSET] = (input_byte_array[index + START_OFFSET] & ~1) | binary_message[index].to_i
+      output[index + START_OFFSET] = (input_byte_array[index] & ~1) | binary_message[index].to_i
     end
     output
   end
@@ -55,3 +55,12 @@ class Encoder
   end
 end
 
+class ResourceGatherer
+  require 'rubygems'
+  require 'rest-client'
+  def self.download_image(path,url)
+    File.open(path, 'wb' ) do |output|
+      output.write RestClient.get(url)
+    end
+  end
+end
